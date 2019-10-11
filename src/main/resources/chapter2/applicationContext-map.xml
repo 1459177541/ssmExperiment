@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dao" class="chapter2.dao.impl.DaoImpl">
+        <property name="dataMap">
+            <map>
+                <entry key="1" value="Something1"/>
+                <entry key="2" value="Something2"/>
+                <entry key="3" value="Something3"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="service" class="chapter2.service.impl.ServiceImpl">
+        <property name="dao" ref="dao"/>
+    </bean>
+</beans>
