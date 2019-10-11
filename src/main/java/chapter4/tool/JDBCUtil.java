@@ -1,4 +1,4 @@
-package chatper4.tool;
+package chapter4.tool;
 
 import java.sql.*;
 import java.util.Objects;

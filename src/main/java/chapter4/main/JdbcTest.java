@@ -1,13 +1,12 @@
-package chatper4.main;
+package chapter4.main;
 
-import chatper4.dao.AccountDao;
-import chatper4.dao.impl.JDBCAccountDaoImpl;
-import chatper4.model.Account;
-import org.junit.jupiter.api.Assertions;
+import chapter4.dao.AccountDao;
+import chapter4.dao.impl.JDBCAccountDaoImpl;
+import chapter4.model.Account;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class JDBC {
+public class JdbcTest {
 
     private static AccountDao accountDao;
 

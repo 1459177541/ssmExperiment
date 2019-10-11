@@ -1,4 +1,4 @@
-package chatper4.model;
+package chapter5.model;
 
 public class Account {
     private Long id;

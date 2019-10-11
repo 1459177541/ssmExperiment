@@ -1,6 +1,6 @@
-package chatper4.dao;
+package chapter4.dao;
 
-import chatper4.model.Account;
+import chapter4.model.Account;
 
 import java.util.List;
 

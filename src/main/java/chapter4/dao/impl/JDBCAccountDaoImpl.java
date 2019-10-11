@@ -1,10 +1,9 @@
-package chatper4.dao.impl;
+package chapter4.dao.impl;
 
 
-import chapter1.A;
-import chatper4.dao.AccountDao;
-import chatper4.model.Account;
-import chatper4.tool.JDBCUtil;
+import chapter4.dao.AccountDao;
+import chapter4.model.Account;
+import chapter4.tool.JDBCUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

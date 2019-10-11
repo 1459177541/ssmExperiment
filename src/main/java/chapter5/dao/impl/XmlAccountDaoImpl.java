@@ -1,19 +1,19 @@
-package chatper4.dao.impl;
+package chapter5.dao.impl;
 
-import chatper4.dao.AccountDao;
-import chatper4.model.Account;
+import chapter4.model.Account;
+import chapter5.dao.AccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
-public class SpringAccountDaoImpl implements AccountDao {
+public class XmlAccountDaoImpl implements AccountDao {
 
     private final JdbcTemplate template;
 
     @Autowired
-    public SpringAccountDaoImpl(JdbcTemplate jdbcTemplate){
+    public XmlAccountDaoImpl(JdbcTemplate jdbcTemplate){
         this.template = jdbcTemplate;
     }
 
@@ -43,5 +43,16 @@ public class SpringAccountDaoImpl implements AccountDao {
     @Override
     public List<Account> findAll() {
         return template.query("SELECT * FROM account", new BeanPropertyRowMapper<>(Account.class));
+    }
+
+    /**
+     * @param isErr 是否模拟出错
+     */
+    @Override
+    public void transfer(long formId, long toId, double money, boolean isErr) {
+        template.update("UPDATE account SET balance=balance+? WHERE id=?", money, formId);
+        //noinspection NumericOverflow,divzero
+        System.out.println(isErr?1/0:1);
+        template.update("UPDATE account SET balance=balance-? WHERE id=?", money, toId);
     }
 }
