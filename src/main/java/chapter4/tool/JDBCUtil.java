@@ -1,7 +1,10 @@
 package chapter4.tool;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
+import java.util.Properties;
 
 public class JDBCUtil {
 
@@ -25,7 +28,13 @@ public class JDBCUtil {
 
     public static Connection getConnection(){
         if (defaultConnection == null) {
-            defaultConnection = new JDBCUtil("yxc", "816357492", "test");
+            try {
+                Properties properties = new Properties();
+                properties.load(new FileInputStream("jdbc.properties"));
+                defaultConnection = new JDBCUtil(properties);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return defaultConnection.getConn();
     }
@@ -43,6 +52,14 @@ public class JDBCUtil {
         this.dbUrl = dbUrl;
         this.userName = userName;
         this.userPassword = userPassword;
+        restart();
+    }
+
+    public JDBCUtil(Properties properties){
+        jdbcDriver = properties.getProperty("jdbc.driver");
+        dbUrl = properties.getProperty("jdbc.url");
+        userName = properties.getProperty("jdbc.user");
+        userPassword = properties.getProperty("jdbc.password");
         restart();
     }
 

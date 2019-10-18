@@ -3,6 +3,8 @@ package chapter2.service.impl;
 import chapter2.dao.Dao;
 import chapter2.service.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ServiceImpl implements Service {
@@ -26,9 +28,14 @@ public class ServiceImpl implements Service {
 
     @Override
     public String say() {
-        return Optional.ofNullable(dao.getAll())
-                .map(Object::toString)
-                .or(()-> Optional.ofNullable(dao.getMap()).map(Object::toString))
-                .orElse(dao.get());
+        List<String> list = dao.getAll();
+        if (list != null) {
+            return list.toString();
+        }
+        Map<Integer, String> map = dao.getMap();
+        if (map != null) {
+            return map.toString();
+        }
+        return dao.get();
     }
 }
