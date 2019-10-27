@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chapter06to08.mapper.CustomerMapper">
+    <sql id="selectAll">
+        SELECT * FROM ${table} 
+    </sql>
+    <resultMap id="customerMap" type="customer">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="jobs" property="jobs"/>
+        <result column="photo" property="photo"/>
+    </resultMap>
+    <select id="findOne" parameterType="Integer" resultMap="customerMap">
+        <include refid="selectAll">
+            <property name="table" value="customer"/>
+        </include>
+        WHERE id=#{id}
+    </select>
+    <select id="findAll" resultMap="customerMap">
+        <include refid="selectAll">
+            <property name="table" value="customer"/>
+        </include>
+    </select>
+    <select id="findByColumn" resultMap="customerMap">
+        <include refid="selectAll">
+            <property name="table" value="customer"/>
+        </include>
+        WHERE ${column} = #{value}
+    </select>
+    <select id="findByName" resultMap="customerMap">
+        <include refid="selectAll">
+            <property name="table" value="customer"/>
+        </include>
+        WHERE name LIKE CONCAT('%','${value}','%')
+    </select>
+    <insert id="save" parameterType="customer">
+        INSERT INTO customer
+        VALUES (#{id}, #{name}, #{jobs}, #{phone})
+    </insert>
+    <update id="update" parameterType="customer">
+        UPDATE customer
+        SET name=#{name}, jobs=#{jobs}, phone=#{phone}
+        WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM customer WHERE id=#{id}
+    </delete>
+</mapper>

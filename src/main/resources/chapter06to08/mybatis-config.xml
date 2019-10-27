@@ -7,6 +7,9 @@
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
+    <typeAliases>
+        <typeAlias type="chapter06to08.model.Customer" alias="customer"/>
+    </typeAliases>
     <environments default="mysql">
         <environment id="mysql">
             <transactionManager type="JDBC"/>
@@ -19,6 +22,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="chapter06/mapper/customer.xml"/>
+        <package name="chapter06to08.mapper"/>
     </mappers>
 </configuration>

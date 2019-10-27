@@ -1,4 +1,4 @@
-package chapter06.model;
+package chapter06to08.model;
 
 import java.util.Objects;
 

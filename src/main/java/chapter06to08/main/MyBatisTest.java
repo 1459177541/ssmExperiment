@@ -1,6 +1,7 @@
-package chapter06.main;
+package chapter06to08.main;
 
-import chapter06.model.Customer;
+import chapter06to08.mapper.CustomerMapper;
+import chapter06to08.model.Customer;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,8 +10,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MyBatisTest {
 
@@ -19,20 +18,20 @@ public class MyBatisTest {
     @BeforeAll
     static void start() throws IOException {
         factory = new SqlSessionFactoryBuilder()
-                .build(Resources.getResourceAsStream("chapter06/mybatis-config.xml"));
+                .build(Resources.getResourceAsStream("chapter06to08/mybatis-config.xml"));
     }
 
     @Test
     void add(){
         try(SqlSession sqlSession = factory.openSession()){
-            System.out.println(sqlSession.insert(
-                    "customerMapper.save",
-                    new Customer()
+            System.out.println(sqlSession
+                    .getMapper(CustomerMapper.class)
+                    .save(new Customer()
                             .setId(1)
                             .setName("user1")
                             .setJobs("student")
-                            .setPhone("12345678910"))
-            );
+                            .setPhone("12345678910")
+                    ));
             sqlSession.commit();
         }
     }
@@ -40,10 +39,9 @@ public class MyBatisTest {
     @Test
     void delete(){
         try(SqlSession sqlSession = factory.openSession()){
-            System.out.println(sqlSession.delete(
-                    "customerMapper.delete",
-                    1
-            ));
+            System.out.println(sqlSession
+                    .getMapper(CustomerMapper.class)
+                    .delete(1));
             sqlSession.commit();
         }
     }
@@ -51,8 +49,8 @@ public class MyBatisTest {
     @Test
     void update(){
         try(SqlSession sqlSession = factory.openSession()){
-            System.out.println(sqlSession.update(
-                    "customerMapper.update",
+            System.out.println(sqlSession
+                    .getMapper(CustomerMapper.class).update(
                     new Customer()
                             .setId(1)
                             .setName("user1")
@@ -66,10 +64,9 @@ public class MyBatisTest {
     @Test
     void select(){
         try(SqlSession sqlSession = factory.openSession()){
-            System.out.println((Customer)sqlSession.selectOne(
-                    "customerMapper.findOne",
-                    1
-            ));
+            System.out.println(sqlSession
+                    .getMapper(CustomerMapper.class)
+                    .findOne(1));
             sqlSession.commit();
         }
     }
@@ -77,7 +74,9 @@ public class MyBatisTest {
     @Test
     void selectAll(){
         try(SqlSession sqlSession = factory.openSession()){
-            sqlSession.selectList("customerMapper.findAll")
+            sqlSession
+                    .getMapper(CustomerMapper.class)
+                    .findAll()
                     .forEach(System.out::println);
             sqlSession.commit();
         }
@@ -86,11 +85,9 @@ public class MyBatisTest {
     @Test
     void selectByColumn(){
         try(SqlSession sqlSession = factory.openSession()){
-            Map<String, String> map = new HashMap<>();
-            map.put("column", "name");
-            map.put("value", "user1");
             sqlSession
-                    .selectList("customerMapper.findByColumn", map)
+                    .getMapper(CustomerMapper.class)
+                    .findByColumn("name", "user1")
                     .forEach(System.out::println);
             sqlSession.commit();
         }
@@ -99,8 +96,10 @@ public class MyBatisTest {
     @Test
     void selectByName(){
         try(SqlSession sqlSession = factory.openSession()){
-            sqlSession.selectList("customerMapper.findByName", "user")
+            sqlSession.getMapper(CustomerMapper.class)
+                    .findByName("user")
                     .forEach(System.out::println);
+            sqlSession.commit();
         }
     }
 }
