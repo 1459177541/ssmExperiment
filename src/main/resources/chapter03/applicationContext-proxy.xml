@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="aspect" class="chapter03.aspect.ProxyAspect"/>
+    <bean id="userDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="chapter03.dao.UserDao"/>
+        <property name="target">
+            <bean class="chapter03.dao.impl.UserDaoImpl"/>
+        </property>
+        <property name="interceptorNames" value="aspect"/>
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+</beans>

@@ -13,12 +13,12 @@
 
     <servlet>
         <servlet-name>Chapter1Web</servlet-name>
-        <servlet-class>chapter1.web.Http</servlet-class>
+        <servlet-class>chapter01.web.Http</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>Chapter1Web</servlet-name>
-        <url-pattern>/chapter1.html</url-pattern>
+        <url-pattern>/chapter01.html</url-pattern>
     </servlet-mapping>
 
 </web-app>

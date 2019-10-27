@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dao" class="chapter02.dao.impl.DaoImpl"/>
+    <bean id="service" class="chapter02.service.impl.ServiceImpl">
+        <property name="dao" ref="dao"/>
+    </bean>
+</beans>
