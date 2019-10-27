@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyBatisTest {
 
@@ -75,8 +77,30 @@ public class MyBatisTest {
     @Test
     void selectAll(){
         try(SqlSession sqlSession = factory.openSession()){
-            sqlSession.selectList("customerMapper.findAll").forEach(System.out::println);
+            sqlSession.selectList("customerMapper.findAll")
+                    .forEach(System.out::println);
             sqlSession.commit();
+        }
+    }
+
+    @Test
+    void selectByColumn(){
+        try(SqlSession sqlSession = factory.openSession()){
+            Map<String, String> map = new HashMap<>();
+            map.put("column", "name");
+            map.put("value", "user1");
+            sqlSession
+                    .selectList("customerMapper.findByColumn", map)
+                    .forEach(System.out::println);
+            sqlSession.commit();
+        }
+    }
+
+    @Test
+    void selectByName(){
+        try(SqlSession sqlSession = factory.openSession()){
+            sqlSession.selectList("customerMapper.findByName", "user")
+                    .forEach(System.out::println);
         }
     }
 }

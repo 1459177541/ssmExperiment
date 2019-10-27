@@ -9,6 +9,12 @@
     <select id="findAll" resultType="chapter06.model.Customer">
         SELECT * FROM customer
     </select>
+    <select id="findByColumn" resultType="chapter06.model.Customer">
+        SELECT * FROM customer WHERE ${column} = #{value}
+    </select>
+    <select id="findByName" resultType="chapter06.model.Customer">
+        SELECT * FROM customer WHERE name LIKE CONCAT('%','${value}','%')
+    </select>
     <insert id="save" parameterType="chapter06.model.Customer">
         INSERT INTO customer
         VALUES (#{id}, #{name}, #{jobs}, #{phone})
