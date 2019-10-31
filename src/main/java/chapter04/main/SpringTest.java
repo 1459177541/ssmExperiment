@@ -20,7 +20,7 @@ public class SpringTest {
     @Test
     void addAccount(){
         accountDao.addAccount(new Account()
-                .setId((long) 1)
+                .setId(1L)
                 .setName("user1")
                 .setBalance(520.0)
         );
@@ -29,7 +29,7 @@ public class SpringTest {
     @Test
     void updateAccount(){
         accountDao.updateAccount(new Account()
-                .setId((long) 1)
+                .setId(1L)
                 .setName("user1")
                 .setBalance(500.0)
         );
@@ -38,7 +38,7 @@ public class SpringTest {
     @Test
     void deleteAccount(){
         accountDao.deleteAccount(new Account()
-                .setId((long) 1)
+                .setId(1L)
         );
     }
 

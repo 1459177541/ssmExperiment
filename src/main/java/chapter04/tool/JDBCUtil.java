@@ -3,7 +3,6 @@ package chapter04.tool;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.Objects;
 import java.util.Properties;
 
 public class JDBCUtil {
@@ -17,15 +16,6 @@ public class JDBCUtil {
 
     private static JDBCUtil defaultConnection;
 
-    public JDBCUtil toDefault(){
-        defaultConnection = this;
-        return this;
-    }
-
-    public static JDBCUtil getDefault(){
-        return Objects.requireNonNull(defaultConnection,"没有默认数据库链接");
-    }
-
     public static Connection getConnection(){
         if (defaultConnection == null) {
             try {
@@ -37,22 +27,6 @@ public class JDBCUtil {
             }
         }
         return defaultConnection.getConn();
-    }
-
-    public JDBCUtil(String userName, String userPassword, String databaseName){
-        this.userName = userName;
-        this.userPassword = userPassword;
-        jdbcDriver = "com.mysql.cj.jdbc.Driver";
-        dbUrl = "jdbc:mysql://localhost:3306/"+databaseName+"?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true";
-        restart();
-    }
-
-    public JDBCUtil(String jdbcDriver, String dbUrl, String userName, String userPassword) {
-        this.jdbcDriver = jdbcDriver;
-        this.dbUrl = dbUrl;
-        this.userName = userName;
-        this.userPassword = userPassword;
-        restart();
     }
 
     public JDBCUtil(Properties properties){
@@ -96,32 +70,4 @@ public class JDBCUtil {
         return true;
     }
 
-    @SuppressWarnings({"SqlNoDataSourceInspection", "SqlResolve"})
-    public boolean hasTable(String name){
-        if (connection==null){
-            restart();
-        }
-        String sql = "SHOW TABLES;";
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()){
-                String tableName = rs.getString(0);
-                if (tableName.equals(name)){
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            return false;
-        }
-        return false;
-    }
-
 }
-
-
-
-
-
-
-
